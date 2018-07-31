@@ -144,6 +144,12 @@ set(config_module_list
 	#examples/hwtest
 )
 
+# Additional Flight Tasks
+# (on top of the core tasks that mc_pos_ctrl needs)
+set(flight_tasks_additional
+		Orbit
+)
+
 # Default config_sitl_rcS_dir (posix_sitl_default), this is overwritten later
 # for the config posix_sitl_efk2 and set again, explicitly, for posix_sitl_lpe,
 # which are based on posix_sitl_default.
