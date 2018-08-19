@@ -251,6 +251,9 @@ else
 
 	if ver hwcmp AEROFC_V1
 	then
+		#Added by A & J 19/08
+		px4flow start &
+		# end of addition
 		if param compare SYS_AUTOSTART 0
 		then
 			set AUTOCNF yes
