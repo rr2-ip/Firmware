@@ -203,7 +203,7 @@ PX4FLOW::PX4FLOW(int bus, int address, enum Rotation rotation, int conversion_in
 	_class_instance(-1),
 	_orb_class_instance(-1),
 	_px4flow_topic(nullptr),
-	_distance_sensor_topic(nullptr),
+	//_distance_sensor_topic(nullptr),
 	_sample_perf(perf_alloc(PC_ELAPSED, "px4f_read")),
 	_comms_errors(perf_alloc(PC_COUNT, "px4f_com_err")),
 	_conversion_interval(conversion_interval),
@@ -253,8 +253,8 @@ PX4FLOW::init()
 	struct distance_sensor_s ds_report = {};
 
 	if (_class_instance == CLASS_DEVICE_PRIMARY) {
-		_distance_sensor_topic = orb_advertise_multi(ORB_ID(distance_sensor), &ds_report,
-					 &_orb_class_instance, ORB_PRIO_HIGH);
+		//_distance_sensor_topic = orb_advertise_multi(ORB_ID(distance_sensor), &ds_report,
+		//			 &_orb_class_instance, ORB_PRIO_HIGH);
 
 		if (_distance_sensor_topic == nullptr) {
 			DEVICE_LOG("failed to create distance_sensor object. Did you start uOrb?");
