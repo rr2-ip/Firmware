@@ -598,7 +598,7 @@ PX4FLOW::collect()
 	distance_report.signal_quality = -1;
 	distance_report.type = distance_sensor_s::MAV_DISTANCE_SENSOR_ULTRASOUND;
 	/* TODO: the ID needs to be properly set */
-	distance_report.id = 1;
+	distance_report.id = 0;
 	distance_report.orientation = _sonar_rotation;
 	
 	orb_publish(ORB_ID(distance_sensor), _distance_sensor_topic, &distance_report);
