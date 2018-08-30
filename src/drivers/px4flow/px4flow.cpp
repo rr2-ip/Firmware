@@ -581,11 +581,11 @@ PX4FLOW::collect()
 	rotate_3f(_sensor_rotation, report.gyro_x_rate_integral, report.gyro_y_rate_integral, report.gyro_z_rate_integral);
 
 	if (_px4flow_topic == nullptr) {
-		_px4flow_topic = orb_advertise(ORB_ID(optical_flow), &report);
+		//_px4flow_topic = orb_advertise(ORB_ID(optical_flow), &report);
 
 	} else {
 		/* publish it */
-		orb_publish(ORB_ID(optical_flow), _px4flow_topic, &report);
+		//orb_publish(ORB_ID(optical_flow), _px4flow_topic, &report);
 	}
 
 	/* publish to the distance_sensor topic as well */ //commented out by Andrew 30/08
