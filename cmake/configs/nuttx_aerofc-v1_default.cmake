@@ -14,6 +14,7 @@ set(config_module_list
 	drivers/magnetometer/hmc5883
 	drivers/magnetometer/ist8310
 	drivers/imu/mpu9250
+	drivers/px4flow
 	drivers/px4fmu
 	drivers/stm32
 	drivers/pwm_out_sim
