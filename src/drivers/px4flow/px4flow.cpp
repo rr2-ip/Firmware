@@ -600,8 +600,7 @@ PX4FLOW::collect()
 	/* TODO: the ID needs to be properly set */
 	distance_report.id = 0;
 	distance_report.orientation = _sonar_rotation;
-	/* Commented by Andrew 30/08/18 */
-	/*orb_publish(ORB_ID(distance_sensor), _distance_sensor_topic, &distance_report); */
+	orb_publish(ORB_ID(distance_sensor), _distance_sensor_topic, &distance_report);
 
 	/* post a report to the ring */
 	_reports->force(&report);
