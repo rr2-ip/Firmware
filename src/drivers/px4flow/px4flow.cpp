@@ -134,7 +134,7 @@ private:
 	int			_class_instance;
 	int			_orb_class_instance;
 	orb_advert_t		_px4flow_topic;
-	orb_advert_t		_distance_sensor_topic;
+	//orb_advert_t		_distance_sensor_topic;
 
 	perf_counter_t		_sample_perf;
 	perf_counter_t		_comms_errors;
@@ -250,15 +250,15 @@ PX4FLOW::init()
 	_class_instance = register_class_devname(RANGE_FINDER_BASE_DEVICE_PATH);
 
 	/* get a publish handle on the range finder topic */
-	struct distance_sensor_s ds_report = {};
+	//struct distance_sensor_s ds_report = {};
 
 	if (_class_instance == CLASS_DEVICE_PRIMARY) {
 		//_distance_sensor_topic = orb_advertise_multi(ORB_ID(distance_sensor), &ds_report,
 		//			 &_orb_class_instance, ORB_PRIO_HIGH);
 
-		if (_distance_sensor_topic == nullptr) {
+		/*if (_distance_sensor_topic == nullptr) {
 			DEVICE_LOG("failed to create distance_sensor object. Did you start uOrb?");
-		}
+		}*/
 
 	} else {
 		DEVICE_LOG("not primary range device, not advertising");
@@ -581,11 +581,11 @@ PX4FLOW::collect()
 	rotate_3f(_sensor_rotation, report.gyro_x_rate_integral, report.gyro_y_rate_integral, report.gyro_z_rate_integral);
 
 	if (_px4flow_topic == nullptr) {
-		//_px4flow_topic = orb_advertise(ORB_ID(optical_flow), &report);
+		_px4flow_topic = orb_advertise(ORB_ID(optical_flow), &report);
 
 	} else {
 		/* publish it */
-		//orb_publish(ORB_ID(optical_flow), _px4flow_topic, &report);
+		orb_publish(ORB_ID(optical_flow), _px4flow_topic, &report);
 	}
 
 	/* publish to the distance_sensor topic as well */ //commented out by Andrew 30/08
