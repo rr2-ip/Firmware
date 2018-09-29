@@ -563,7 +563,7 @@ else
 	#
 	# Launch the flow sensor as a background task.
 	#
-	if ver hwcmp PX4FMU_V2 PX4FMU_V4 PX4FMU_V4PRO MINDPX_V2 PX4FMU_V5 OMNIBUS_F4SD
+	if ver hwcmp PX4FMU_V2 PX4FMU_V4 PX4FMU_V4PRO MINDPX_V2 PX4FMU_V5 OMNIBUS_F4SD AEROFC_V1
 	then
 		px4flow start &
 	fi
