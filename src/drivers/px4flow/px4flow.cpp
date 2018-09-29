@@ -589,7 +589,7 @@ PX4FLOW::collect()
 	}
 
 	/* publish to the distance_sensor topic as well */
-	struct distance_sensor_s distance_report;
+	/*struct distance_sensor_s distance_report;
 	distance_report.timestamp = report.timestamp;
 	distance_report.min_distance = PX4FLOW_MIN_DISTANCE;
 	distance_report.max_distance = PX4FLOW_MAX_DISTANCE;
@@ -598,7 +598,7 @@ PX4FLOW::collect()
 	distance_report.signal_quality = -1;
 	distance_report.type = distance_sensor_s::MAV_DISTANCE_SENSOR_ULTRASOUND;
 	/* TODO: the ID needs to be properly set */
-	distance_report.id = 0;
+	/*distance_report.id = 0;
 	distance_report.orientation = _sonar_rotation;
 
 	orb_publish(ORB_ID(distance_sensor), _distance_sensor_topic, &distance_report);
