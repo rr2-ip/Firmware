@@ -87,8 +87,8 @@
 /* PX4FLOW Registers addresses */
 #define PX4FLOW_REG			0x16	///< Measure Register 22
 
-#define PX4FLOW_CONVERSION_INTERVAL_DEFAULT 10000	///< in microseconds! = 10 Hz -> 100 Hz
-#define PX4FLOW_CONVERSION_INTERVAL_MIN      5000	///< in microseconds! = 100 Hz -> 200 Hz
+#define PX4FLOW_CONVERSION_INTERVAL_DEFAULT 100000	///< in microseconds! = 10 Hz
+#define PX4FLOW_CONVERSION_INTERVAL_MIN      10000	///< in microseconds! = 100 Hz
 #define PX4FLOW_CONVERSION_INTERVAL_MAX    1000000	///< in microseconds! = 1 Hz
 
 #define PX4FLOW_I2C_MAX_BUS_SPEED	400000	///< 400 KHz maximum speed
@@ -559,7 +559,7 @@ PX4FLOW::collect()
 
 	report.gyro_z_rate_integral = static_cast<float>(_frame_integral.gyro_z_rate_integral) / 10000.0f; //convert to radians
 
-	report.integration_timespan = _frame_integral.integration_timespan; //microseconds
+	report.integration_timespan = 1.1*_frame_integral.integration_timespan; //microseconds
 
 	report.time_since_last_sonar_update = _frame_integral.sonar_timestamp;//microseconds
 
