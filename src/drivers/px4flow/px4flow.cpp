@@ -549,7 +549,7 @@ PX4FLOW::collect()
 
 	report.frame_count_since_last_readout = _frame_integral.frame_count_since_last_readout;
 
-	report.ground_distance_m = static_cast<float>(_frame_integral.ground_distance) / 1000.0f;//convert to meters
+	report.ground_distance_m = 0.0;//static_cast<float>(_frame_integral.ground_distance) / 1000.0f;//convert to meters
 
 	report.quality = _frame_integral.qual; //0:bad ; 255 max quality
 
