@@ -678,7 +678,7 @@ MavlinkReceiver::handle_message_optical_flow_rad(mavlink_message_t *msg)
 	f.gyro_y_rate_integral = flow.integrated_ygyro;
 	f.gyro_z_rate_integral = flow.integrated_zgyro;
 	f.time_since_last_sonar_update = flow.time_delta_distance_us;
-	f.ground_distance_m = -flow.distance;
+	f.ground_distance_m = flow.distance;
 	f.quality = flow.quality;
 	f.sensor_id = flow.sensor_id;
 	f.gyro_temperature = flow.temperature;
