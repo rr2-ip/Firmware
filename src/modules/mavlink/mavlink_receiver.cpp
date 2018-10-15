@@ -678,7 +678,7 @@ MavlinkReceiver::handle_message_optical_flow_rad(mavlink_message_t *msg)
 	f.gyro_y_rate_integral = flow.integrated_ygyro;
 	f.gyro_z_rate_integral = flow.integrated_zgyro;
 	f.time_since_last_sonar_update = flow.time_delta_distance_us;
-	f.ground_distance_m = flow.distance;
+	f.ground_distance_m = -flow.distance;
 	f.quality = flow.quality;
 	f.sensor_id = flow.sensor_id;
 	f.gyro_temperature = flow.temperature;
@@ -698,7 +698,7 @@ MavlinkReceiver::handle_message_optical_flow_rad(mavlink_message_t *msg)
 	/* Use distance value for distance sensor topic */
 	struct distance_sensor_s d = {};
 
-	if (flow.distance > 0.0f) { // negative values signal invalid data
+	if ((flow.distance > 0.0f) && (f.ground_distance > 0.0f)) { // negative values signal invalid data
 		d.timestamp = flow.integration_time_us * 1000; /* ms to us */
 		d.min_distance = 0.3f;
 		d.max_distance = 5.0f;
