@@ -559,7 +559,7 @@ PX4FLOW::collect()
 
 	report.gyro_z_rate_integral = static_cast<float>(_frame_integral.gyro_z_rate_integral) / 10000.0f; //convert to radians
 
-	report.integration_timespan = 1.1*_frame_integral.integration_timespan; //microseconds
+	report.integration_timespan = _frame_integral.integration_timespan; //microseconds
 
 	report.time_since_last_sonar_update = _frame_integral.sonar_timestamp;//microseconds
 
