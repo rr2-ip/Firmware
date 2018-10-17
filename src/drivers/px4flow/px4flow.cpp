@@ -87,7 +87,7 @@
 /* PX4FLOW Registers addresses */
 #define PX4FLOW_REG			0x16	///< Measure Register 22
 
-#define PX4FLOW_CONVERSION_INTERVAL_DEFAULT 100000	///< in microseconds! = 10 Hz
+#define PX4FLOW_CONVERSION_INTERVAL_DEFAULT 100000	///< in microseconds! = 10Hz
 #define PX4FLOW_CONVERSION_INTERVAL_MIN      10000	///< in microseconds! = 100 Hz
 #define PX4FLOW_CONVERSION_INTERVAL_MAX    1000000	///< in microseconds! = 1 Hz
 
@@ -134,7 +134,7 @@ private:
 	int			_class_instance;
 	int			_orb_class_instance;
 	orb_advert_t		_px4flow_topic;
-	//orb_advert_t		_distance_sensor_topic;
+	orb_advert_t		_distance_sensor_topic;
 
 	perf_counter_t		_sample_perf;
 	perf_counter_t		_comms_errors;
@@ -203,7 +203,7 @@ PX4FLOW::PX4FLOW(int bus, int address, enum Rotation rotation, int conversion_in
 	_class_instance(-1),
 	_orb_class_instance(-1),
 	_px4flow_topic(nullptr),
-	//_distance_sensor_topic(nullptr),
+	_distance_sensor_topic(nullptr),
 	_sample_perf(perf_alloc(PC_ELAPSED, "px4f_read")),
 	_comms_errors(perf_alloc(PC_COUNT, "px4f_com_err")),
 	_conversion_interval(conversion_interval),
@@ -250,15 +250,15 @@ PX4FLOW::init()
 	_class_instance = register_class_devname(RANGE_FINDER_BASE_DEVICE_PATH);
 
 	/* get a publish handle on the range finder topic */
-	//struct distance_sensor_s ds_report = {};
+	struct distance_sensor_s ds_report = {};
 
 	if (_class_instance == CLASS_DEVICE_PRIMARY) {
-		//_distance_sensor_topic = orb_advertise_multi(ORB_ID(distance_sensor), &ds_report,
-		//			 &_orb_class_instance, ORB_PRIO_HIGH);
+		_distance_sensor_topic = orb_advertise_multi(ORB_ID(distance_sensor), &ds_report,
+					 &_orb_class_instance, ORB_PRIO_HIGH);
 
-		/*if (_distance_sensor_topic == nullptr) {
-			DEVICE_LOG("failed to create distance_sensor object. Did you start uOrb?");
-		}*/
+		if (_distance_sensor_topic == nullptr) {
+			PX4_ERR("failed to create distance_sensor object");
+		}
 
 	} else {
 		DEVICE_LOG("not primary range device, not advertising");
@@ -588,21 +588,21 @@ PX4FLOW::collect()
 		orb_publish(ORB_ID(optical_flow), _px4flow_topic, &report);
 	}
 
-	/* publish to the distance_sensor topic as well */ //commented out by Andrew 30/08
-	/*struct distance_sensor_s distance_report;
+	/* publish to the distance_sensor topic as well */
+	struct distance_sensor_s distance_report;
 	distance_report.timestamp = report.timestamp;
 	distance_report.min_distance = PX4FLOW_MIN_DISTANCE;
 	distance_report.max_distance = PX4FLOW_MAX_DISTANCE;
 	distance_report.current_distance = report.ground_distance_m;
 	distance_report.covariance = 0.0f;
 	distance_report.signal_quality = -1;
-	distance_report.type = distance_sensor_s::MAV_DISTANCE_SENSOR_ULTRASOUND;*/
+	distance_report.type = distance_sensor_s::MAV_DISTANCE_SENSOR_ULTRASOUND;
 	/* TODO: the ID needs to be properly set */
-	/*distance_report.id = 0;
+	distance_report.id = 0;
 	distance_report.orientation = _sonar_rotation;
-	
-	orb_publish(ORB_ID(distance_sensor), _distance_sensor_topic, &distance_report);*/
-	
+
+	orb_publish(ORB_ID(distance_sensor), _distance_sensor_topic, &distance_report);
+
 	/* post a report to the ring */
 	_reports->force(&report);
 
